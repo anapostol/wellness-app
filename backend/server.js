@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 require('dotenv').config();
+require('./src/config/firebaseConfig');
 
 const app = express();
 
@@ -32,6 +33,51 @@ app.get('/', (req, res) => {
       health: '/api/health'
     }
   });
+});
+
+//test DB endpoint 
+app.get('/api/test-db', async (req, res) => {
+  try {
+    const firestoreService = require('./src/services/firestoreService');
+    
+    //create
+    const testDoc = await firestoreService.createDocument('test_collection', {
+      message: 'Hello from Firestore!',
+      timestamp: new Date().toISOString()
+    });
+
+    //select
+    const retrieved = await firestoreService.getDocument('test_collection', testDoc.id);
+
+    //update
+    const updated = await firestoreService.updateDocument('test_collection', testDoc.id, {
+      message: 'Updated message!'
+    });
+
+    //select *
+    const allDocs = await firestoreService.getCollection('test_collection');
+
+    //delete
+    await firestoreService.deleteDocument('test_collection', testDoc.id);
+
+    res.json({
+      success: true,
+      message: 'Firestore connection successful!',
+      tests: {
+        created: testDoc,
+        retrieved: retrieved,
+        updated: updated,
+        collection: allDocs,
+        deleted: true
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Firestore connection failed',
+      error: error.message
+    });
+  }
 });
 
 //404 handler
