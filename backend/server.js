@@ -5,6 +5,10 @@ const morgan = require('morgan');
 require('dotenv').config();
 require('./src/config/firebaseConfig');
 
+const workoutRoutes = require('./src/routes/workoutRoutes');
+const mealPlanRoutes = require('./src/routes/mealPlanRoutes');
+const enrollmentRoutes = require('./src/routes/enrollmentRoutes');
+
 const app = express();
 
 //middlewares
@@ -13,6 +17,10 @@ app.use(cors()); //CORS pentru frontend
 app.use(express.json()); //parse JSON body
 app.use(express.urlencoded({ extended: true })); //parse URL-encoded body
 app.use(morgan('dev')); //logging requests in consola
+
+app.use('/api/workouts', workoutRoutes);
+app.use('/api/meal-plans', mealPlanRoutes);
+app.use('/api/enrollments', enrollmentRoutes);
 
 //health check
 app.get('/api/health', (req, res) => {
