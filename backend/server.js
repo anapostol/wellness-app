@@ -18,8 +18,8 @@ app.use(express.json()); //parse JSON body
 app.use(express.urlencoded({ extended: true })); //parse URL-encoded body
 app.use(morgan('dev')); //logging requests in consola
 
-app.use('/api/workouts', workoutRoutes);
-app.use('/api/meal-plans', mealPlanRoutes);
+app.use('/api/workouts', workoutRoutes); 
+app.use('/api/meal-plans', mealPlanRoutes); 
 app.use('/api/enrollments', enrollmentRoutes);
 
 //health check

@@ -1,17 +1,17 @@
 <template>
-  <div style="padding: 16px">
-    <nav style="display: flex; gap: 12px; margin-bottom: 16px">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/workouts">Workouts</RouterLink>
-      <RouterLink to="/nutrition">Nutrition</RouterLink>
-      <RouterLink to="/dashboard">Dashboard</RouterLink>
-      <RouterLink to="/login">Login</RouterLink>
-    </nav>
-
-    <RouterView />
-  </div>
+  <router-view />
 </template>
 
+<style>
+body,
+.v-application {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.v-application {
+  background: rgb(var(--v-theme-background));
+}
+</style>
+
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
 </script>
